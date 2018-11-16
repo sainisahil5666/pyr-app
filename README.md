@@ -1,6 +1,8 @@
 StarClinch - Post Your Requirement
 =================
 
+![Post Your Requirement](https://i.imgur.com/Q6swDau.png "Post Your Requirement")
+
 A web-app made using CSS and JS that displays an easy to use form where users can post their requiremnent. 
 
 The app accepts two optional query parameters:
