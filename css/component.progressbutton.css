@@ -1,0 +1,166 @@
+*, *:after, *::before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+@font-face {
+	font-weight: normal;
+	font-style: normal;
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon/icomoon.eot');
+	src:url('../fonts/icomoon/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/icomoon/icomoon.ttf') format('truetype'),
+		url('../fonts/icomoon/icomoon.woff') format('woff'),
+		url('../fonts/icomoon/icomoon.svg#icomoon') format('svg');
+}
+
+.progress-button {
+	position: relative;
+	display: inline-block;
+	padding: 0 60px;
+	outline: none;
+	border: none;
+	background: #1d9650;
+	color: #fff;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-size: 0.5em;
+	line-height: 3;
+}
+
+.progress-button[disabled],
+.progress-button[disabled].state-loading {
+	cursor: default;
+}
+
+.progress-button .content {
+	position: relative;
+	display: block;
+}
+
+.progress-button .content::before,
+.progress-button .content::after  {
+	position: absolute;
+	right: 20px;
+	color: #0e7138;
+	font-family: "icomoon";
+	opacity: 0;
+	-webkit-transition: opacity 0.3s 0.3s;
+	transition: opacity 0.3s 0.3s;
+}
+
+.progress-button .content::before {
+	content: "\e600"; /* Checkmark for success */
+}
+
+.progress-button .content::after {
+	content: "\e601"; /* Cross for error */
+}
+
+.progress-button.state-success .content::before,
+.progress-button.state-error .content::after {
+	opacity: 1;
+}
+
+.notransition {
+	-webkit-transition: none !important;
+	transition: none !important;
+}
+
+.progress-button .progress {
+	background: #148544;
+}
+
+.progress-button .progress-inner {
+	position: absolute;
+	left: 0;
+	background: #0e7138;
+}
+
+.progress-button[data-horizontal] .progress-inner {
+	top: 0;
+	width: 0;
+	height: 100%;
+	-webkit-transition: width 0.3s, opacity 0.3s;
+	transition: width 0.3s, opacity 0.3s;
+}
+
+.progress-button[data-vertical] .progress-inner {
+	bottom: 0;
+	width: 100%;
+	height: 0;
+	-webkit-transition: height 0.3s, opacity 0.3s;
+	transition: height 0.3s, opacity 0.3s;
+}
+
+.progress-button[data-perspective] {
+	position: relative;
+	display: inline-block;
+	padding: 0;
+	background: transparent;
+	-webkit-perspective: 900px;
+	perspective: 900px;
+}
+
+.progress-button[data-perspective] .content {
+	padding: 0 60px;
+	background: #1d9650;
+}
+
+.progress-button[data-perspective] .progress-wrap {
+	display: block;
+	-webkit-transition: -webkit-transform 0.2s;
+	transition: transform 0.2s;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+.progress-button[data-perspective] .content,
+.progress-button[data-perspective] .progress {
+	outline: 1px solid rgba(0,0,0,0); /* Smoothen jagged edges in FF */
+}
+
+.progress-button[data-style="rotate-side-down"] .progress {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	height: 20px;
+	-webkit-transform: rotateX(-90deg);
+	transform: rotateX(-90deg);
+	-webkit-transform-origin: 50% 0%;
+	transform-origin: 50% 0%;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.progress-button[data-style="rotate-side-down"].state-loading .progress-wrap {
+	-webkit-transform: rotateX(90deg) translateZ(10px);
+	transform: rotateX(90deg) translateZ(10px);
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+body {
+	color: #fff;
+	font-family: 'Lato', Arial, sans-serif;
+}
+
+section {
+	position: relative;
+	text-align: center;
+	padding: 1em 1em 3em;
+}
+
+.progressget {
+	padding-top: 30px;
+}
+
+@media screen and (max-width: 768px) {
+	.progressget {
+		padding-top: 110px;
+	}
+
+}
