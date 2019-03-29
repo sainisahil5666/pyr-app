@@ -1,18 +1,17 @@
+subcategories={
+    'Anchor/Emcee':['Emcee', 'Radio Jockey', 'Voice Over Artist', 'Video Jockey'],
+    'Comedian':['Stand-Up', 'Reality Show', 'Mimicry', 'Impersonators'],
+    'Celebrity':['Film Star','Pageant Winner','Sports Celebrity', 'TV Personality','Singer','Dancer'],
+    'Live Band':['Bollywood', 'Punjabi', 'English', 'Sufi', 'Rock', 'Jazz', 'Fusion'],
+    'Singer':['Acoustic Singer', 'Bollywood', 'Classical', 'English', 'Retro', 'Ghazal', 'Hindi', 'Indian Folk', 'Punjabi', 'Karaoke', 'Qawwali', 'Rapper', 'Religious']
+}
 $('#loading').hide();
 $('#body').show();
-
-// $(document).ready(function() {
-//     window.history.pushState(null, "", window.location.href);        
-//     window.onpopstate = function() {
-//         window.history.pushState(null, "", window.location.href);
-//     };
-// });
-
 
 function trackEventz(eventAction, evntCategory, eventLabel, eventValue) {
     gtag('event', 'click', {'event_category': evntCategory, 'event_label': email, 'value': eventValue});
 }
-
+qualData={}
 window.location.hash = 'category';
 
 $(window).on('hashchange', function () {
@@ -176,9 +175,7 @@ $('#fields-event').hide();
 $('#fields-meta').hide();
 $('#fields-user').hide();
 $('#fields-thanks').hide();
-
 $('#after-get-quote').hide();
-$('#fields-gender').hide();
 $('#fields-audience').hide();
 $('#fields-thanks-last').hide();
 
@@ -281,8 +278,6 @@ try {
 
     let axiosConfig = {
       headers: {
-          'cache-control': 'no-cache',
-           'x-apikey': '<DB-API-KEY>',
            'content-type': 'application/json'
       }
     };
@@ -292,7 +287,7 @@ try {
         'type': type                    
     };
 
-    axios.post('<DB-URL>', 
+    axios.post('https://us-central1-wired-compass-230106.cloudfunctions.net/pyr_firestore', 
             jsondata, axiosConfig)
     .then(function(responseDB){
         console.log('email saved successfully');                 
@@ -373,8 +368,8 @@ $('#button-continue-meta').click(function() {
 });
 
 // $('#button-submit').click(function() {
-// 	$('#fields-user').hide();
-// 	$('#fields-thanks').show();
+//  $('#fields-user').hide();
+//  $('#fields-thanks').show();
 // });
 
 $('#button-previous-event').click(function() {
@@ -435,10 +430,18 @@ $('#button-previous-user').click(function() {
 [].slice.call(document.querySelectorAll('button.progress-button')).forEach(function(bttn) {
     new ProgressButton(bttn, {
         callback: function(instance) {
-            var progress = 0,
-                interval = setInterval(function() {
+            $(window).scrollTop($("#body").offset().top);
+            $('#get-quote').hide();
+            $('#after-get-quote').show();
+            $('#text-title-after').text('Is the Event Date Confirmed?'); 
+            $('#text-subtitle-after').text('Thanks! Get a faster response by providing us more information');
+             /*var progress = 0,
+
+               interval = setInterval(function() {
                     progress = Math.min(progress + Math.random() * 0.1, 1);
                     instance._setProgress(progress);
+
+                    
 
                     if (progress === 1) {
                         instance._stop(1);
@@ -451,20 +454,18 @@ $('#button-previous-user').click(function() {
 
                         let axiosConfig = {
                           headers: {
-                              'cache-control': 'no-cache',
-                               'x-apikey': '<DB-API-KEY>',
                                'content-type': 'application/json'
                           }
                         };
 
                         var jsondata = {
-                            'artist': artist!=null? artist : "", 
-                            'artistid': artistID!=null ? artistID : "", 
+                            //'artist': artist!=null? artist : "", 
+                            //'artistid': artistID!=null ? artistID : "",
                             'category': categoryVerbose, 
                             'event': eventVerbose, 
                             'venue': venue, 
                             'date': date, 
-                            'gathering': gathering, 
+                            //'gathering': gathering, 
                             'budget': budget, 
                             'name': name, 
                             'email': email, 
@@ -476,13 +477,16 @@ $('#button-previous-user').click(function() {
                         console.log(jsondata);
 
                         window.localStorage.setItem("clientname", name);
-                            window.localStorage.setItem("clientemail", email);
-                            window.localStorage.setItem("clientphone", phone);
+                        window.localStorage.setItem("clientemail", email);
+                        window.localStorage.setItem("clientphone", phone);
 
-                        axios.post('<DB-URL>', 
+                        
+
+
+                        /*axios.post('https://us-central1-wired-compass-230106.cloudfunctions.net/pyr_firestore', 
                                 jsondata, axiosConfig)
                         .then(function(responseDB){
-                            console.log('restdb post saved successfully');   
+                            console.log('Firestore post saved successfully');   
                             
                             FS.identify(email, {
                               email: email,
@@ -496,7 +500,7 @@ $('#button-previous-user').click(function() {
                             $('#get-quote').hide();
                             $('#loading').show();
 
-                            if(artist) {
+                            /*if(artist) {
                                 window.location.replace('/' + artist);
                             }
                             else {
@@ -547,49 +551,49 @@ $('#button-previous-user').click(function() {
                                             window.location.replace('/browse/');
                                             break;
                                 }
-                            }                            
+                            }                          
                             
-                            // $('#after-get-quote').show();
-                            // $('#fields-thanks-last').show();
+                            $('#after-get-quote').show();
+                            $('#fields-thanks-last').show();
 
-                            // if(artist == null){
-                            //     $('#fields-gender').show();
-                            //     $('#fields-audience').hide();
-                            //     $('#text-title-after').text('Select the gender of the ' + categoryVerbose); 
-                            //     $('#text-subtitle-after').text('Thanks! Get a faster response by providing us more information');
-                            // }
-                            // else {
-                            //     $('#fields-gender').hide();
-                            //     $('#fields-audience').show();
-                            //     $('#text-title-after').text(artist + ' will be performing for what age group?'); 
-                            //     $('#text-subtitle-after').text('Thanks! Get a faster response by providing us more information');
-                            // }               
+                            if(artist == null){
+                                $('#fields-gender').show();
+                                $('#fields-audience').hide();
+                                $('#text-title-after').text('Select the gender of the ' + categoryVerbose); 
+                                $('#text-subtitle-after').text('Thanks! Get a faster response by providing us more information');
+                            }
+                            else {
+                                $('#fields-gender').hide();
+                                $('#fields-audience').show();
+                                $('#text-title-after').text(artist + ' will be performing for what age group?'); 
+                                $('#text-subtitle-after').text('Thanks! Get a faster response by providing us more information');
+                            }               
                         }).catch(error=>{
                             console.log(error);
                             alert('There was an error while submitting your request. Please refresh this page and try again.')
                         }); 
                     }
-                }, 200);
+                }, 200);*/
         }
     });
 });
 
 
-$('#fields-gender .thumbnail a').click(function() {
-    gender = $(this).attr('data-value');
-    genderVerbose = $(this).find('p').text();
-    console.log(gender, genderVerbose);
+// $('#fields-gender .thumbnail a').click(function() {
+//     gender = $(this).attr('data-value');
+//     genderVerbose = $(this).find('p').text();
+//     console.log(gender, genderVerbose);
 
-    $(window).scrollTop($("#body").offset().top);
-    $('#fields-gender').hide();
-    $('#fields-audience').show();
-    if (artist == null)
-        $('#text-title-after').text(genderVerbose + ' ' + categoryVerbose + ' for which age group?');
-    else
-        $('#text-title-after').text(artist + ' for which age group?');
+//     $(window).scrollTop($("#body").offset().top);
+//     $('#fields-gender').hide();
+//     $('#fields-audience').show();
+//     if (artist == null)
+//         $('#text-title-after').text(genderVerbose + ' ' + categoryVerbose + ' for which age group?');
+//     else
+//         $('#text-title-after').text(artist + ' for which age group?');
 
-    $('#text-subtitle-after').text('');
-});
+//     $('#text-subtitle-after').text('');
+// });
 
 $('#fields-audience .thumbnail a').click(function() {
     // gender = $(this).attr('data-value');
@@ -606,3 +610,175 @@ $('#fields-audience .thumbnail a').click(function() {
 
     $('#text-subtitle-after').text('Awesome suggestions are on their way to you');
 });
+$('#fields-date-confirmed .thumbnail a').click(function() {
+    $('#fields-date-confirmed').hide();
+    $('#text-subtitle-after').text('');
+    if('CampusCharityConcertRestaurant'.includes(eventVerbose)){
+        $('#fields-ticket').show()
+        $('#text-title-after').text('What type of Event is it?')
+    }
+    else{
+        $('#fields-event-info').show()
+        $('#text-title-after').text('Event Details')
+    }
+});
+
+function cont(fade, text, show) {
+    $(fade).fadeTo('slow', 0.35, function() {
+        $('#text-title-after').text(text)
+        $(show).css('visibility', 'visible')
+    })
+}
+
+function hide_show(hide, show, text) {
+    $(hide).hide()
+    $(show).show()
+    $('#text-title-after').text(text)
+}
+
+function only_digit(a) {
+    return $(a).val().match(/^\d*$/g) 
+}
+
+function populate() {
+    if(categoryVerbose=='Celebrity' && $(window).width()<1000 && $(window).width()>500)  {
+        console.log('In Celebrity and tablet');
+        [['Film Star','Pageant Winner','Sports Celebrity'],['TV Personality','Singer','Dancer']].forEach(function(a) {
+       $('#fields-subcategory').prepend($(`<div class=row>
+        <div class="col-md-3 col-sm-4 col-xs-6">
+            <div class="thumbnail">
+              <a href="" onclick="gtag('event', 'click', {'event_category': 'pyr-2', 'event_label': 'event-wedding'});return false;" data-value="event-wedding">
+                <img src="img/event-icon/wedding.jpg" alt="" style="width:100%">
+                <div class="caption">
+                  <p class="text-center">${a[0]}</p>
+                </div>
+              </a>
+            </div>
+        </div>
+         <div class="col-md-3 col-sm-4 col-xs-6">
+            <div class="thumbnail">
+              <a href="" onclick="gtag('event', 'click', {'event_category': 'pyr-2', 'event_label': 'event-wedding'});return false;" data-value="event-wedding">
+                <img src="img/event-icon/wedding.jpg" alt="" style="width:100%">
+                <div class="caption">
+                  <p class="text-center">${a[1]}</p>
+                </div>
+              </a>
+            </div>
+        </div>
+         <div class="col-md-3 col-sm-4 col-xs-6">
+            <div class="thumbnail">
+              <a href="" onclick="gtag('event', 'click', {'event_category': 'pyr-2', 'event_label': 'event-wedding'});return false;" data-value="event-wedding">
+                <img src="img/event-icon/wedding.jpg" alt="" style="width:100%">
+                <div class="caption">
+                  <p class="text-center">${a[2]}</p>
+                </div>
+              </a>
+            </div>
+        </div>
+        </div>`))})
+        return
+    }
+    if(subcategories[categoryVerbose].length<5)
+        bootWidth=3
+    else
+        bootWidth=2
+    if(subcategories[categoryVerbose].length<7)
+        ipad=4
+    else
+        ipad=3
+    subcategories[categoryVerbose].forEach(function(a) {
+       $('#fields-subcategory .row:first').prepend(`<div class="col-md-`+bootWidth+` col-sm-`+ipad+` col-xs-6">
+            <div class="thumbnail">
+              <a href="" onclick="gtag('event', 'click', {'event_category': 'pyr-2', 'event_label': 'event-wedding'});return false;" data-value="event-wedding">
+                <img src="img/event-icon/wedding.jpg" alt="" style="width:100%">
+                <div class="caption">
+                  <p class="text-center">${a}</p>
+                </div>
+              </a>
+            </div>
+        </div>`)})
+}
+
+$('#fields-ticket .thumbnail a:first').click( function(){ hide_show('#fields-ticket', '#fields-ticket-price', 'Ticket Price')});
+$('#fields-ticket .thumbnail a:last').click( function(){ hide_show('#fields-ticket', '#fields-event-info', 'Event Details')});
+$('#fields-ticket-price .thumbnail a').click( function(){ hide_show('#fields-ticket-price', '#fields-event-info', 'Event Details')});
+$('#event-button-continue').click( function(){
+    if($('#fields-event-info .input__field').toArray().every(only_digit)){
+        hide_show('#fields-event-info', '#fields-looking', 'Do you have a specific artist name in your mind?')
+        populate()
+    }
+    else
+        $('#fields-event-info .validation-error').text('Please enter only digits')
+});
+$('#fields-looking .thumbnail a:first').click( function(){ cont('#fields-looking .thumbnail', "Specify the artist's name which you require", '#looking-for')});
+$('#fields-looking .thumbnail a:last').click( function(){ hide_show('#fields-looking','#fields-gender', 'Gender preference for '+categoryVerbose)});
+$('#looking-button-continue').click( function(){ hide_show('#fields-looking', '#fields-more', 'Do you want more artist options in your budget?')});
+$('#fields-more .thumbnail a:first').click( function(){ hide_show('#fields-more', '#fields-gender', 'Gender preference for '+categoryVerbose)});
+$('#fields-more .thumbnail a:last').click( function(){ hide_show('#fields-more', '#fields-flexible', 'Is your budget '+budget+' flexible?')});
+$('#fields-gender .thumbnail a').click( function(){ hide_show('#fields-gender', '#fields-language', 'Language preference for '+categoryVerbose)});
+$('#fields-language :input').click( function(){ 
+    if(subcategories[categoryVerbose])
+        hide_show('#fields-language', '#fields-subcategory', 'What type of '+categoryVerbose+' do you need?')
+    else
+        hide_show('#fields-language', '#fields-flexible', 'Is your budget '+budget+' flexible?')
+});
+$('#fields-subcategory :input').click(function(){
+    if(categoryVerbose=='Anchor/Emcee'){
+        ['Team Building', 'Perform a Game', 'Engage Audience'].forEach(function(a) {
+            $('#fields-purpose .row:first').append(`<div class="col-md-4 col-sm-4 col-xs-6">
+            <div class="thumbnail">
+              <a href="" onclick="gtag('event', 'click', {'event_category': 'pyr-2', 'event_label': 'event-wedding'});return false;" data-value="event-wedding">
+                <img src="img/event-icon/wedding.jpg" alt="" style="width:100%">
+                <div class="caption">
+                  <p class="text-center">${a}</p>
+                </div>
+              </a>
+            </div>
+        </div>`)})
+        hide_show('#fields-subcategory', '#fields-purpose', 'Do you require any type of activity to be conducted by the Anchor?')
+    }
+    else if(categoryVerbose=='Celebrity'){
+        ['Performance', 'Endorsement', 'Appearance', 'Professional Hiring', 'Shoot'].forEach(function(a) {
+            $('#fields-purpose .row:first').append(`<div class="col-md-2 col-sm-4 col-xs-6">
+            <div class="thumbnail">
+              <a href="" onclick="gtag('event', 'click', {'event_category': 'pyr-2', 'event_label': 'event-wedding'});return false;" data-value="event-wedding">
+                <img src="img/event-icon/wedding.jpg" alt="" style="width:100%">
+                <div class="caption">
+                  <p class="text-center">${a}</p>
+                </div>
+              </a>
+            </div>
+        </div>`)})
+        hide_show('#fields-subcategory', '#fields-purpose', 'What is the purpose of event you require Celebrity for?')
+    }
+    else if(categoryVerbose=='Comedian')
+        hide_show('#fields-subcategory', '#fields-content-type', 'What type of content do you want?')
+    else if(categoryVerbose=='Live Band')
+        hide_show('#fields-subcategory', '#fields-performing-members', 'What are the number of performing members you require?')
+    else
+        hide_show('#fields-subcategory', '#fields-singer-with-band', 'Do you want a singer with band/without band?')
+})
+$('#fields-content-type input').click( function() {hide_show('#fields-content-type', '#fields-flexible', 'Is your budget '+budget+' flexible?')})
+$('#fields-purpose input').click( function(){ hide_show('#fields-purpose', '#fields-flexible', 'Is your budget '+budget+' flexible?')});
+$('#fields-performing-members input:last').click( function(){
+    if($('#fields-performing-members .input__field').val().match(/^\d*$/g))
+        hide_show('#fields-performing-members', '#fields-flexible', 'Is your budget '+budget+' flexible?')
+    else
+        $('#fields-performing-members .validation-error').text('Please enter only digits')
+});
+$('#fields-singer-with-band .thumbnail').click( function(){ hide_show('#fields-singer-with-band', '#fields-flexible', 'Is your budget '+budget+' flexible?')});
+$('#fields-flexible .thumbnail a:first').click( function(){ cont('#fields-flexible .thumbnail', "What's your maximum budget?", '#maximum-budget')});
+$('#fields-flexible .thumbnail a:last').click( function(){ hide_show('#fields-flexible', '#fields-gst', 'Is your budget inclusive of GST?')});
+$('#budget-button-continue').click( function(){
+    if($('#fields-flexible .input__field').val().match(/^\d*$/g))
+        hide_show('#fields-flexible', '#fields-gst', 'Is your budget inclusive of GST?')
+    else
+        $('#fields-flexible .validation-error').text('Please enter only digits')
+});
+$('#fields-gst .thumbnail a').click( function(){ hide_show('#fields-gst', '#fields-tbl', 'Can you provide TBL (Travelling, Boarding, Lodging) costs for '+categoryVerbose)});
+$('#fields-tbl .thumbnail a').click( function(){ hide_show('#fields-tbl', '#fields-event-organizer', 'Are you an Event organizer?')});
+$('#fields-event-organizer .thumbnail a:eq(1)').click( function(){ cont('#fields-event-organizer .row:first', "Then you are....", '#fields-event-organizer .row:last')});
+$('#fields-event-organizer .thumbnail a:not(:eq(1))').click( function(){ hide_show('#fields-event-organizer', "#fields-contact", 'How would you like to be contacted?')});
+$('body').delegate('.thumbnail', 'click', function() {
+    $(this).toggleClass('selected')
+})

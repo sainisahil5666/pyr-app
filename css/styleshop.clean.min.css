@@ -1,3 +1,4 @@
+*{outline: 0 !important;}
 #headerwrap {
     background-color: rgba(255, 255, 255, .95);
     border-bottom: 1px solid rgba(0, 0, 0, .1);
@@ -54,7 +55,6 @@
 
 a {
     text-decoration: none;
-    outline: 0;
     color: #b78711;
     -webkit-transition: all .3s linear;
     -moz-transition: all .3s linear;
@@ -335,8 +335,13 @@ a {
     font-family: inherit;
     max-width: 100%;
 }
-
-
-
-
-
+fieldset{
+    display: none;
+}
+#looking-for, #maximum-budget{
+    visibility: hidden;
+}
+.selected{
+    border: 5px solid #899dda;
+    padding: 2px;
+}
